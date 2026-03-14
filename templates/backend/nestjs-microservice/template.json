@@ -1,0 +1,17 @@
+{
+  "name": "nestjs-microservice",
+  "questions": [
+    {
+      "name": "serviceName",
+      "message": "Microservice name:",
+      "type": "input"
+    },
+    {
+      "name": "transport",
+      "message": "Transport layer:",
+      "type": "list",
+      "choices": ["kafka", "rabbitmq", "redis"]
+    }
+  ],
+  "output": "src/{{serviceName}}"
+}

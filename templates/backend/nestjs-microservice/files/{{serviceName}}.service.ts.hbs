@@ -1,0 +1,24 @@
+import { Injectable, Logger } from '@nestjs/common';
+
+@Injectable()
+export class {{pascalCase serviceName}}Service {
+  private readonly logger = new Logger({{pascalCase serviceName}}Service.name);
+
+  handleCreated(data: any) {
+    this.logger.log(`[{{serviceName}}.created] ${JSON.stringify(data)}`);
+    // TODO: process created event
+    return { status: 'ok' };
+  }
+
+  handleUpdated(data: any) {
+    this.logger.log(`[{{serviceName}}.updated] ${JSON.stringify(data)}`);
+    // TODO: process updated event
+    return { status: 'ok' };
+  }
+
+  handleDeleted(data: any) {
+    this.logger.log(`[{{serviceName}}.deleted] ${JSON.stringify(data)}`);
+    // TODO: process deleted event
+    return { status: 'ok' };
+  }
+}

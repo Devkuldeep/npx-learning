@@ -1,0 +1,29 @@
+{
+  "name": "docker-service",
+  "questions": [
+    {
+      "name": "serviceName",
+      "message": "Service name:",
+      "type": "input"
+    },
+    {
+      "name": "port",
+      "message": "Port number:",
+      "type": "input",
+      "default": "3000"
+    },
+    {
+      "name": "database",
+      "message": "Include database?",
+      "type": "list",
+      "choices": ["none", "postgres", "mongodb"]
+    },
+    {
+      "name": "redis",
+      "message": "Include Redis?",
+      "type": "confirm",
+      "default": false
+    }
+  ],
+  "output": "."
+}

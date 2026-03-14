@@ -1,0 +1,31 @@
+import { Controller } from '@nestjs/common';
+{{#if (eq transport "kafka")}}
+import { MessagePattern, Payload } from '@nestjs/microservices';
+{{/if}}
+{{#if (eq transport "rabbitmq")}}
+import { MessagePattern, Payload } from '@nestjs/microservices';
+{{/if}}
+{{#if (eq transport "redis")}}
+import { MessagePattern, Payload } from '@nestjs/microservices';
+{{/if}}
+import { {{pascalCase serviceName}}Service } from './{{serviceName}}.service';
+
+@Controller()
+export class {{pascalCase serviceName}}Controller {
+  constructor(private readonly service: {{pascalCase serviceName}}Service) {}
+
+  @MessagePattern('{{serviceName}}.created')
+  handleCreated(@Payload() data: any) {
+    return this.service.handleCreated(data);
+  }
+
+  @MessagePattern('{{serviceName}}.updated')
+  handleUpdated(@Payload() data: any) {
+    return this.service.handleUpdated(data);
+  }
+
+  @MessagePattern('{{serviceName}}.deleted')
+  handleDeleted(@Payload() data: any) {
+    return this.service.handleDeleted(data);
+  }
+}

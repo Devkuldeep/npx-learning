@@ -1,0 +1,23 @@
+{
+  "name": "express-api",
+  "questions": [
+    {
+      "name": "projectName",
+      "message": "Project name:",
+      "type": "input"
+    },
+    {
+      "name": "port",
+      "message": "Port:",
+      "type": "input",
+      "default": "3000"
+    },
+    {
+      "name": "cors",
+      "message": "Enable CORS?",
+      "type": "confirm",
+      "default": true
+    }
+  ],
+  "output": "{{projectName}}"
+}

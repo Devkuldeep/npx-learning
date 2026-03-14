@@ -1,0 +1,29 @@
+import { Injectable } from '@nestjs/common';
+import { {{pascalCase moduleName}}Repository } from './{{moduleName}}.repository';
+import { Create{{pascalCase moduleName}}Dto } from './dto/create-{{moduleName}}.dto';
+import { Update{{pascalCase moduleName}}Dto } from './dto/update-{{moduleName}}.dto';
+
+@Injectable()
+export class {{pascalCase moduleName}}Service {
+  constructor(private readonly repo: {{pascalCase moduleName}}Repository) {}
+
+  findAll(query: any) {
+    return this.repo.findAll(query);
+  }
+
+  findOne(id: string) {
+    return this.repo.findOne(id);
+  }
+
+  create(dto: Create{{pascalCase moduleName}}Dto) {
+    return this.repo.create(dto);
+  }
+
+  update(id: string, dto: Update{{pascalCase moduleName}}Dto) {
+    return this.repo.update(id, dto);
+  }
+
+  remove(id: string) {
+    return this.repo.remove(id);
+  }
+}

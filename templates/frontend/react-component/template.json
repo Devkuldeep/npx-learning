@@ -1,0 +1,23 @@
+{
+  "name": "react-component",
+  "questions": [
+    {
+      "name": "componentName",
+      "message": "Component name (e.g. UserProfile):",
+      "type": "input"
+    },
+    {
+      "name": "styling",
+      "message": "Styling approach:",
+      "type": "list",
+      "choices": ["css-modules", "tailwind", "none"]
+    },
+    {
+      "name": "withTest",
+      "message": "Include test file?",
+      "type": "confirm",
+      "default": true
+    }
+  ],
+  "output": "src/components/{{componentName}}"
+}

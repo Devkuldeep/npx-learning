@@ -1,0 +1,35 @@
+{
+  "name": "github-actions",
+  "questions": [
+    {
+      "name": "projectName",
+      "message": "Project name:",
+      "type": "input"
+    },
+    {
+      "name": "runtime",
+      "message": "Runtime:",
+      "type": "list",
+      "choices": ["node", "bun"]
+    },
+    {
+      "name": "nodeVersion",
+      "message": "Node version:",
+      "type": "input",
+      "default": "20"
+    },
+    {
+      "name": "runTests",
+      "message": "Include test step?",
+      "type": "confirm",
+      "default": true
+    },
+    {
+      "name": "docker",
+      "message": "Include Docker build & push?",
+      "type": "confirm",
+      "default": false
+    }
+  ],
+  "output": ".github/workflows"
+}

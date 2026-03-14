@@ -1,0 +1,42 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { {{pascalCase moduleName}}Service } from './{{moduleName}}.service';
+import { Create{{pascalCase moduleName}}Dto } from './dto/create-{{moduleName}}.dto';
+import { Update{{pascalCase moduleName}}Dto } from './dto/update-{{moduleName}}.dto';
+import { Query{{pascalCase moduleName}}Dto } from './dto/query-{{moduleName}}.dto';
+{{#if auth}}
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../common/guards/auth.guard';
+{{/if}}
+
+{{#if auth}}
+@UseGuards(AuthGuard)
+{{/if}}
+@Controller('{{moduleName}}')
+export class {{pascalCase moduleName}}Controller {
+  constructor(private readonly service: {{pascalCase moduleName}}Service) {}
+
+  @Get()
+  findAll(@Query() query: Query{{pascalCase moduleName}}Dto) {
+    return this.service.findAll(query);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.service.findOne(id);
+  }
+
+  @Post()
+  create(@Body() dto: Create{{pascalCase moduleName}}Dto) {
+    return this.service.create(dto);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() dto: Update{{pascalCase moduleName}}Dto) {
+    return this.service.update(id, dto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.service.remove(id);
+  }
+}

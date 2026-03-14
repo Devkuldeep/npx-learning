@@ -1,0 +1,46 @@
+{
+  "templates": [
+    {
+      "name": "nestjs-crud",
+      "category": "backend",
+      "path": "backend/nestjs-crud",
+      "description": "NestJS CRUD module with controller, service, DTOs, entity, and tests"
+    },
+    {
+      "name": "nestjs-auth",
+      "category": "backend",
+      "path": "backend/nestjs-auth",
+      "description": "NestJS authentication module with JWT, guards, and refresh tokens"
+    },
+    {
+      "name": "express-api",
+      "category": "backend",
+      "path": "backend/express-api",
+      "description": "Express REST API boilerplate with routing and CORS"
+    },
+    {
+      "name": "docker-service",
+      "category": "infrastructure",
+      "path": "infrastructure/docker",
+      "description": "Dockerfile + docker-compose with optional Postgres, MongoDB, Redis"
+    },
+    {
+      "name": "github-actions",
+      "category": "infrastructure",
+      "path": "infrastructure/github-actions",
+      "description": "GitHub Actions CI pipeline with optional Docker build & push"
+    },
+    {
+      "name": "nestjs-microservice",
+      "category": "backend",
+      "path": "backend/nestjs-microservice",
+      "description": "NestJS microservice with Kafka, RabbitMQ, or Redis transport"
+    },
+    {
+      "name": "react-component",
+      "category": "frontend",
+      "path": "frontend/react-component",
+      "description": "React component with TypeScript, styling, barrel export, and test"
+    }
+  ]
+}

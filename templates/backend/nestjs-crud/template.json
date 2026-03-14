@@ -1,0 +1,23 @@
+{
+  "name": "nestjs-crud",
+  "questions": [
+    {
+      "name": "moduleName",
+      "message": "Resource name (e.g. user, product):",
+      "type": "input"
+    },
+    {
+      "name": "database",
+      "message": "Database ORM:",
+      "type": "list",
+      "choices": ["typeorm", "prisma"]
+    },
+    {
+      "name": "auth",
+      "message": "Add authentication guard?",
+      "type": "confirm",
+      "default": false
+    }
+  ],
+  "output": "src/modules/{{moduleName}}"
+}

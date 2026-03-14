@@ -1,0 +1,15 @@
+{{#if (eq styling "css-modules")}}
+import styles from './{{componentName}}.module.css';
+{{/if}}
+
+interface {{componentName}}Props {
+  className?: string;
+}
+
+export function {{componentName}}({ className }: {{componentName}}Props) {
+  return (
+    <div{{#if (eq styling "css-modules")}} className={styles.container}{{/if}}{{#if (eq styling "tailwind")}} className="p-4"{{/if}}>
+      <h2>{{componentName}}</h2>
+    </div>
+  );
+}

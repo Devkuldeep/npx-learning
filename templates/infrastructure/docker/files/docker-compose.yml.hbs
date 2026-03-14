@@ -1,0 +1,64 @@
+services:
+  {{serviceName}}:
+    build: .
+    ports:
+      - "{{port}}:{{port}}"
+    environment:
+      - NODE_ENV=production
+      - PORT={{port}}
+{{#if (eq database "postgres")}}
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/{{serviceName}}
+{{/if}}
+{{#if (eq database "mongodb")}}
+      - MONGO_URI=mongodb://mongo:27017/{{serviceName}}
+{{/if}}
+{{#if redis}}
+      - REDIS_URL=redis://redis:6379
+{{/if}}
+    depends_on:
+{{#if (eq database "postgres")}}
+      - db
+{{/if}}
+{{#if (eq database "mongodb")}}
+      - mongo
+{{/if}}
+{{#if redis}}
+      - redis
+{{/if}}
+
+{{#if (eq database "postgres")}}
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: {{serviceName}}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+{{/if}}
+
+{{#if (eq database "mongodb")}}
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+{{/if}}
+
+{{#if redis}}
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+{{/if}}
+
+volumes:
+{{#if (eq database "postgres")}}
+  pgdata:
+{{/if}}
+{{#if (eq database "mongodb")}}
+  mongodata:
+{{/if}}
