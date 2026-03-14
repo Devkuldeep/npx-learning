@@ -1,0 +1,50 @@
+'use client';
+
+import { useState } from 'react';
+
+export default function RegisterPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // TODO: call auth API
+    console.log('Register:', { name, email, password });
+  }
+
+  return (
+    <main{{#if (eq styling "tailwind")}} className="flex min-h-screen items-center justify-center"{{/if}}>
+      <form onSubmit={handleSubmit}{{#if (eq styling "tailwind")}} className="flex flex-col gap-4 w-80"{{/if}}>
+        <h1{{#if (eq styling "tailwind")}} className="text-2xl font-bold"{{/if}}>Register</h1>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          {{#if (eq styling "tailwind")}}className="border rounded p-2"{{/if}}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          {{#if (eq styling "tailwind")}}className="border rounded p-2"{{/if}}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          {{#if (eq styling "tailwind")}}className="border rounded p-2"{{/if}}
+        />
+        <button type="submit"{{#if (eq styling "tailwind")}} className="bg-black text-white rounded p-2"{{/if}}>
+          Create Account
+        </button>
+      </form>
+    </main>
+  );
+}

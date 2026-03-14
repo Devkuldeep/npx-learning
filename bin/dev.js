@@ -5,6 +5,7 @@ import { templatesCommand } from "../commands/templates.js";
 import { generateCommand } from "../commands/generate.js";
 import { searchCommand } from "../commands/search.js";
 import { updateCommand } from "../commands/update.js";
+import { configCommand } from "../commands/config.js";
 
 const program = new Command();
 
@@ -22,6 +23,7 @@ program
 program
   .command("generate <template>")
   .description("Generate code from a template")
+  .option("-r, --refresh", "Force re-fetch template from GitHub")
   .action(generateCommand);
 
 program
@@ -31,7 +33,13 @@ program
 
 program
   .command("update")
-  .description("Pull templates from remote Git registry")
+  .description("Sync registry and templates from remote GitHub repo")
+  .option("--clear-cache", "Clear all cached templates")
   .action(updateCommand);
+
+program
+  .command("config [action] [value]")
+  .description("Manage CLI configuration (set-repo, get-repo, show)")
+  .action(configCommand);
 
 program.parse();

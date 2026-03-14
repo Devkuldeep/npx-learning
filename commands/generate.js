@@ -1,12 +1,27 @@
 import chalk from "chalk";
 import ora from "ora";
 import inquirer from "inquirer";
-import { loadRegistry } from "../lib/registry.js";
+import { loadRegistry, syncRegistry, loadConfig } from "../lib/registry.js";
 import { downloadTemplate, renderTemplate } from "../lib/template-engine.js";
 
-export async function generateCommand(templateName) {
+export async function generateCommand(templateName, options) {
+  // Sync registry from GitHub if no local cache exists
   const registry = await loadRegistry();
-  const templateMeta = registry.templates.find((t) => t.name === templateName);
+  let templateMeta = registry.templates.find((t) => t.name === templateName);
+
+  // If template not found locally, try syncing from remote
+  if (!templateMeta) {
+    const config = await loadConfig();
+    const syncSpinner = ora("Syncing template registry from GitHub...").start();
+    try {
+      await syncRegistry(config.remoteRegistry);
+      syncSpinner.succeed("Registry synced.");
+    } catch (err) {
+      syncSpinner.fail("Could not sync registry from remote.");
+    }
+    const freshRegistry = await loadRegistry();
+    templateMeta = freshRegistry.templates.find((t) => t.name === templateName);
+  }
 
   if (!templateMeta) {
     console.log(chalk.red(`\n❌ Template "${templateName}" not found.`));
@@ -18,8 +33,19 @@ export async function generateCommand(templateName) {
     chalk.bold(`\n🚀 Generating: ${chalk.cyan(templateMeta.name)}\n`)
   );
 
-  // Load template.json from the template folder
-  const templateConfig = await downloadTemplate(templateMeta);
+  // Fetch template from GitHub (cached or fresh)
+  const fetchSpinner = ora("Fetching template...").start();
+  let templateConfig;
+  try {
+    templateConfig = await downloadTemplate(templateMeta, {
+      forceRefresh: options.refresh || false,
+    });
+    fetchSpinner.succeed("Template ready.");
+  } catch (err) {
+    fetchSpinner.fail("Failed to fetch template.");
+    console.error(chalk.gray(err.message));
+    process.exit(1);
+  }
 
   // Ask questions from template.json
   let answers = {};

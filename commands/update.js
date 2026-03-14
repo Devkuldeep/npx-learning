@@ -1,49 +1,36 @@
 import chalk from "chalk";
 import ora from "ora";
-import inquirer from "inquirer";
-import { loadConfig, saveConfig } from "../lib/registry.js";
+import { rm } from "fs/promises";
+import path from "path";
+import { existsSync } from "fs";
+import { loadConfig, syncRegistry, getCacheDir } from "../lib/registry.js";
 
-export async function updateCommand() {
+export async function updateCommand(options) {
   const config = await loadConfig();
+  const repo = config.remoteRegistry;
 
-  if (!config.remoteRegistry) {
-    const { repo } = await inquirer.prompt([
-      {
-        name: "repo",
-        message:
-          "Enter your remote template registry (e.g. github-user/template-registry):",
-        type: "input",
-      },
-    ]);
+  console.log(chalk.bold(`\n🔄 Updating from: ${chalk.cyan(repo)}\n`));
 
-    if (!repo) {
-      console.log(chalk.yellow("No registry configured."));
-      return;
-    }
-
-    config.remoteRegistry = repo;
-    await saveConfig(config);
-    console.log(chalk.green(`\n✅ Remote registry set to: ${repo}\n`));
-  }
-
-  const spinner = ora(
-    `Pulling templates from ${config.remoteRegistry}...`
-  ).start();
-
+  // Step 1: Sync registry.json from remote
+  const registrySpinner = ora("Syncing template registry...").start();
   try {
-    // Dynamic import for degit (CommonJS module)
-    const degit = (await import("degit")).default;
-    const emitter = degit(config.remoteRegistry, { cache: false, force: true });
-
-    await emitter.clone("templates-remote");
-    spinner.succeed(
-      chalk.green(`Templates updated from ${config.remoteRegistry}`)
-    );
-    console.log(
-      chalk.gray("  Remote templates cloned to: templates-remote/\n")
-    );
+    await syncRegistry(repo);
+    registrySpinner.succeed("Registry synced.");
   } catch (err) {
-    spinner.fail(chalk.red("Failed to update templates."));
+    registrySpinner.fail("Failed to sync registry.");
     console.error(chalk.gray(err.message));
+    return;
   }
+
+  // Step 2: Clear cached templates so they get re-fetched on next generate
+  if (options.clearCache) {
+    const cacheDir = path.join(getCacheDir(), "templates");
+    if (existsSync(cacheDir)) {
+      const cacheSpinner = ora("Clearing template cache...").start();
+      await rm(cacheDir, { recursive: true, force: true });
+      cacheSpinner.succeed("Template cache cleared.");
+    }
+  }
+
+  console.log(chalk.bold("\n✅ Templates are up to date!\n"));
 }

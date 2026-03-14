@@ -1,0 +1,29 @@
+{
+  "name": "nextjs-app",
+  "questions": [
+    {
+      "name": "projectName",
+      "message": "Project name:",
+      "type": "input"
+    },
+    {
+      "name": "styling",
+      "message": "Styling:",
+      "type": "list",
+      "choices": ["tailwind", "css-modules", "none"]
+    },
+    {
+      "name": "srcDir",
+      "message": "Use src/ directory?",
+      "type": "confirm",
+      "default": true
+    },
+    {
+      "name": "auth",
+      "message": "Include auth page (login/register)?",
+      "type": "confirm",
+      "default": false
+    }
+  ],
+  "output": "{{projectName}}"
+}
