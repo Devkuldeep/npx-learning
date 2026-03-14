@@ -19,5 +19,6 @@
       "default": true
     }
   ],
-  "output": "src/components/{{componentName}}"
+  "output": "src/components/{{componentName}}",
+  "nextSteps": ["Import the component where needed", "npm run dev"]
 }

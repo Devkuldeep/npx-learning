@@ -13,5 +13,6 @@
       "choices": ["kafka", "rabbitmq", "redis"]
     }
   ],
-  "output": "src/{{serviceName}}"
+  "output": "src/{{serviceName}}",
+  "nextSteps": ["Configure transport connection in main.ts", "npm run start:dev"]
 }

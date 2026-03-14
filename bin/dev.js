@@ -24,6 +24,7 @@ program
   .command("generate <template>")
   .description("Generate code from a template")
   .option("-r, --refresh", "Force re-fetch template from GitHub")
+  .option("--skip-install", "Skip automatic dependency installation")
   .action(generateCommand);
 
 program

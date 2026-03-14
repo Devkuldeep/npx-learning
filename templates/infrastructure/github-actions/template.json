@@ -31,5 +31,6 @@
       "default": false
     }
   ],
-  "output": ".github/workflows"
+  "output": ".github/workflows",
+  "nextSteps": ["git add .github/", "git commit -m 'Add CI pipeline'", "git push"]
 }

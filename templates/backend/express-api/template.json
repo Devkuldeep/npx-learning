@@ -19,5 +19,7 @@
       "default": true
     }
   ],
-  "output": "{{projectName}}"
+  "output": "{{projectName}}",
+  "postInstall": ["npm install", "git init"],
+  "nextSteps": ["npm run dev", "Open http://localhost:{{port}}"]
 }

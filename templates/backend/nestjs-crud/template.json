@@ -19,5 +19,6 @@
       "default": false
     }
   ],
-  "output": "src/modules/{{moduleName}}"
+  "output": "src/modules/{{moduleName}}",
+  "nextSteps": ["Import the module in app.module.ts", "npm run start:dev"]
 }
